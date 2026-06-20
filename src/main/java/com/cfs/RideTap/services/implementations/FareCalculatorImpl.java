@@ -14,7 +14,7 @@ import lombok.extern.log4j.Log4j2;
 @Service
 @Log4j2
 public class FareCalculatorImpl implements FareCalculator {
-  private final int FARE_RATE = 5; // 5 rs
+  private final int FARE_RATE = 5; 
 
   @Autowired
   private StationServices stationServices;
@@ -37,7 +37,7 @@ public class FareCalculatorImpl implements FareCalculator {
             origin.getSequenceNumber()
                     - destination.getSequenceNumber());
 
-    return Math.max(stationsTravelled * 2.0, 2.0);
+    return Math.max(stationsTravelled * FARE_RATE, FARE_RATE);
   }
 
 }
