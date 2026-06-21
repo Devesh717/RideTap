@@ -135,6 +135,23 @@ Booking Cancellation Emails
 Event-Based Notifications
 
 
+🛡️ **Admin Panel**
+
+
+Admin Authentication
+
+
+Manage Users
+
+
+Manage Metro Stations
+
+
+View All Bookings
+
+
+Monitor Metro Card Transactions
+
 
 
 
