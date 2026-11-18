@@ -1,0 +1,19 @@
+package com.cfs.RideTap.notification.dto.event;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class BookingCancelledEvent {
+    private Long bookingId;
+    private String email;
+    private String holderName;
+    private String originStation;
+    private String destinationStation;
+    private double refundedAmount;
+}

@@ -1,0 +1,141 @@
+.rt-auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f766e 100%);
+  padding: 24px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.rt-auth-card {
+  width: 100%;
+  max-width: 440px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 20px 45px rgba(15, 23, 42, 0.28);
+  padding: 36px 32px;
+}
+
+.rt-auth-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.rt-auth-badge {
+  background: #0d9488;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 13px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  letter-spacing: 0.4px;
+}
+
+.rt-auth-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 6px 0 4px;
+}
+
+.rt-auth-subtitle {
+  font-size: 14px;
+  color: #64748b;
+  margin-bottom: 24px;
+}
+
+.rt-auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.rt-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.rt-form-group label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.rt-form-group input {
+  padding: 11px 14px;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 10px;
+  font-size: 14px;
+  color: #0f172a;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.rt-form-group input:focus {
+  outline: none;
+  border-color: #0d9488;
+  box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15);
+}
+
+.rt-auth-btn {
+  margin-top: 6px;
+  padding: 12px 16px;
+  background: #0d9488;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.rt-auth-btn:hover:not(:disabled) {
+  background: #0f766e;
+}
+
+.rt-auth-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.rt-auth-alert-error {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #b91c1c;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 13px;
+  margin-bottom: 16px;
+}
+
+.rt-auth-alert-success {
+  background: #f0fdfa;
+  border: 1px solid #99f6e4;
+  color: #0f766e;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 13px;
+  margin-bottom: 16px;
+}
+
+.rt-auth-footer {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 14px;
+  color: #475569;
+}
+
+.rt-auth-link {
+  background: none;
+  border: none;
+  color: #0d9488;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 4px;
+  text-decoration: underline;
+}
