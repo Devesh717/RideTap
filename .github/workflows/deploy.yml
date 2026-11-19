@@ -1,3 +1,4 @@
+
 name: RideTap Build and Deploy
 
 on:
@@ -57,8 +58,10 @@ jobs:
           script_stop: true
           script: |
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:latest
+
             sudo docker stop ridetap-app || true
             sudo docker rm ridetap-app || true
+
             sudo docker run -d \
               --name ridetap-app \
               --restart unless-stopped \
@@ -67,9 +70,14 @@ jobs:
               -e SPRING_DATASOURCE_USERNAME="${{ secrets.SPRING_DATASOURCE_USERNAME }}" \
               -e SPRING_DATASOURCE_PASSWORD="${{ secrets.SPRING_DATASOURCE_PASSWORD }}" \
               -e SPRING_KAFKA_BOOTSTRAP_SERVERS="${{ secrets.SPRING_KAFKA_BOOTSTRAP_SERVERS }}" \
+              -e KAFKA_USERNAME="${{ secrets.KAFKA_USERNAME }}" \
+              -e KAFKA_PASSWORD="${{ secrets.KAFKA_PASSWORD }}" \
               -e JWT_SECRET="${{ secrets.JWT_SECRET }}" \
               -e GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY }}" \
               -e MAIL_USERNAME="${{ secrets.MAIL_USERNAME }}" \
               -e MAIL_PASSWORD="${{ secrets.MAIL_PASSWORD }}" \
+              -e RAZORPAY_KEY_ID="${{ secrets.RAZORPAY_KEY_ID }}" \
+              -e RAZORPAY_KEY_SECRET="${{ secrets.RAZORPAY_KEY_SECRET }}" \
               ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:latest
+
             sudo docker image prune -f
