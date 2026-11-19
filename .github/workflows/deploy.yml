@@ -51,40 +51,40 @@ jobs:
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v1.2.0
         with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USER }}
-          key: ${{ secrets.EC2_SSH_KEY }}
-          script_stop: true
-          script: |
-            mkdir -p /home/ec2-user/certs
-            cat << 'EOF' > /home/ec2-user/certs/aiven-ca.pem
-            ${{ secrets.KAFKA_CA_CERT }}
-            EOF
-            chmod 600 /home/ec2-user/certs/aiven-ca.pem
-
-            cat << 'EOF' > /home/ec2-user/ridetap.env
-            SPRING_DATASOURCE_URL=${{ secrets.SPRING_DATASOURCE_URL }}
-            SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME }}
-            SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD }}
-            SPRING_KAFKA_BOOTSTRAP_SERVERS=${{ secrets.SPRING_KAFKA_BOOTSTRAP_SERVERS }}
-            KAFKA_JAAS_CONFIG=${{ secrets.KAFKA_JAAS_CONFIG }}
-            JWT_SECRET=${{ secrets.JWT_SECRET }}
-            GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}
-            MAIL_USERNAME=${{ secrets.MAIL_USERNAME }}
-            MAIL_PASSWORD=${{ secrets.MAIL_PASSWORD }}
-            RAZORPAY_KEY_ID=${{ secrets.RAZORPAY_KEY_ID }}
-            RAZORPAY_KEY_SECRET=${{ secrets.RAZORPAY_KEY_SECRET }}
-            EOF
-            chmod 600 /home/ec2-user/ridetap.env
-
-            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:latest
-            sudo docker stop ridetap-app || true
-            sudo docker rm ridetap-app || true
-            sudo docker run -d \
-              --name ridetap-app \
-              --restart unless-stopped \
-              -p 8081:8080 \
-              -v /home/ec2-user/certs:/certs:ro \
-              --env-file /home/ec2-user/ridetap.env \
-              ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:latest
-            sudo docker image prune -f
+            host: ${{ secrets.EC2_HOST }}
+            username: ${{ secrets.EC2_USER }}
+            key: ${{ secrets.EC2_SSH_KEY }}
+            script_stop: true
+            script: |
+              mkdir -p /home/ec2-user/certs
+              cat << 'EOF' > /home/ec2-user/certs/aiven-ca.pem
+              ${{ secrets.KAFKA_CA_CERT }}
+              EOF
+              chmod 600 /home/ec2-user/certs/aiven-ca.pem
+              
+              cat << 'EOF' > /home/ec2-user/ridetap.env
+              SPRING_DATASOURCE_URL=${{ secrets.SPRING_DATASOURCE_URL }}
+              SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME }}
+              SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD }}
+              SPRING_KAFKA_BOOTSTRAP_SERVERS=${{ secrets.SPRING_KAFKA_BOOTSTRAP_SERVERS }}
+              KAFKA_JAAS_CONFIG=${{ secrets.KAFKA_JAAS_CONFIG }}
+              JWT_SECRET=${{ secrets.JWT_SECRET }}
+              GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}
+              MAIL_USERNAME=${{ secrets.MAIL_USERNAME }}
+              MAIL_PASSWORD=${{ secrets.MAIL_PASSWORD }}
+              RAZORPAY_KEY_ID=${{ secrets.RAZORPAY_KEY_ID }}
+              RAZORPAY_KEY_SECRET=${{ secrets.RAZORPAY_KEY_SECRET }}
+              EOF
+              chmod 600 /home/ec2-user/ridetap.env
+              
+              sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:latest
+              sudo docker stop ridetap-app || true
+              sudo docker rm ridetap-app || true
+              sudo docker run -d \
+                --name ridetap-app \
+                --restart unless-stopped \
+                -p 8081:8080 \
+                -v /home/ec2-user/certs:/certs:ro \
+                --env-file /home/ec2-user/ridetap.env \
+                ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:latest
+              sudo docker image prune -f
