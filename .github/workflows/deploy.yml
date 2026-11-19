@@ -56,6 +56,12 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script_stop: true
           script: |
+            mkdir -p /home/ec2-user/certs
+            cat << 'EOF' > /home/ec2-user/certs/aiven-ca.pem
+            ${{ secrets.KAFKA_CA_CERT }}
+            EOF
+            chmod 600 /home/ec2-user/certs/aiven-ca.pem
+
             cat << 'EOF' > /home/ec2-user/ridetap.env
             SPRING_DATASOURCE_URL=${{ secrets.SPRING_DATASOURCE_URL }}
             SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME }}
@@ -69,8 +75,8 @@ jobs:
             RAZORPAY_KEY_ID=${{ secrets.RAZORPAY_KEY_ID }}
             RAZORPAY_KEY_SECRET=${{ secrets.RAZORPAY_KEY_SECRET }}
             EOF
-
             chmod 600 /home/ec2-user/ridetap.env
+
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:latest
             sudo docker stop ridetap-app || true
             sudo docker rm ridetap-app || true
@@ -78,6 +84,7 @@ jobs:
               --name ridetap-app \
               --restart unless-stopped \
               -p 8081:8080 \
+              -v /home/ec2-user/certs:/certs:ro \
               --env-file /home/ec2-user/ridetap.env \
               ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:latest
             sudo docker image prune -f
