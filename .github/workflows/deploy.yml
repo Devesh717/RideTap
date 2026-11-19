@@ -57,7 +57,7 @@ jobs:
             script_stop: true
             script: |
               mkdir -p /home/ec2-user/certs
-              cat << 'EOF' > /home/ec2-user/certs/aiven-ca.pem
+              cat << 'EOF' | grep -v 'DRONE_SSH_PREV_COMMAND_EXIT_CODE' > /home/ec2-user/certs/aiven-ca.pem
               ${{ secrets.KAFKA_CA_CERT }}
               EOF
               chmod 600 /home/ec2-user/certs/aiven-ca.pem
