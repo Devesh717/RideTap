@@ -1,4 +1,3 @@
-
 name: RideTap Build and Deploy
 
 on:
@@ -51,7 +50,6 @@ jobs:
 
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v1.2.0
-
         env:
           SPRING_DATASOURCE_URL: ${{ secrets.SPRING_DATASOURCE_URL }}
           SPRING_DATASOURCE_USERNAME: ${{ secrets.SPRING_DATASOURCE_USERNAME }}
@@ -65,21 +63,16 @@ jobs:
           MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }}
           RAZORPAY_KEY_ID: ${{ secrets.RAZORPAY_KEY_ID }}
           RAZORPAY_KEY_SECRET: ${{ secrets.RAZORPAY_KEY_SECRET }}
-
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script_stop: true
-
-          envs: SPRING_DATASOURCE_URL,SPRING_DATASOURCE_USERNAME,SPRING_DATASOURCE_PASSWORD,SPRING_KAFKA_BOOTSTRAP_SERVERS,KAFKA_USERNAME,KAFKA_PASSWORD,JWT_SECRET,GEMINI_API_KEY,MAIL_USERNAME,MAIL_PASSWORD,RAZORPAY_KEY_ID,RAZORPAY_KEY_SECRET
-
+          envs: "SPRING_DATASOURCE_URL,SPRING_DATASOURCE_USERNAME,SPRING_DATASOURCE_PASSWORD,SPRING_KAFKA_BOOTSTRAP_SERVERS,KAFKA_USERNAME,KAFKA_PASSWORD,JWT_SECRET,GEMINI_API_KEY,MAIL_USERNAME,MAIL_PASSWORD,RAZORPAY_KEY_ID,RAZORPAY_KEY_SECRET"
           script: |
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:latest
-
             sudo docker stop ridetap-app || true
             sudo docker rm ridetap-app || true
-
             sudo docker run -d \
               --name ridetap-app \
               --restart unless-stopped \
@@ -97,5 +90,4 @@ jobs:
               -e RAZORPAY_KEY_ID="$RAZORPAY_KEY_ID" \
               -e RAZORPAY_KEY_SECRET="$RAZORPAY_KEY_SECRET" \
               ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:latest
-
             sudo docker image prune -f
