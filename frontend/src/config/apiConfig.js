@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || "http://ridetap.duckdns.org:8081";
+export const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || "https://ridetap.duckdns.org";
 
 export const api = axios.create({
   baseURL: API_BASE_URL,
